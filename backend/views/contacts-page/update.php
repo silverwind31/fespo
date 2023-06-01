@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\ContactsPage $model */
 
-$this->title = 'Update Contacts Page: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Contacts Pages', 'url' => ['index']];
+$this->title = 'Обновить данные: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Контакты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить данные';
 ?>
 <div class="contacts-page-update">
 

@@ -14,6 +14,8 @@ class m230526_165306_create_letters_table extends Migration
     {
         $this->createTable('{{%letters}}', [
             'id' => $this->primaryKey(),
+            'image' => $this->string(255)->null(),
+            'status'=>$this->tinyInteger(2)->notNull()->defaultValue(1)
         ]);
     }
 

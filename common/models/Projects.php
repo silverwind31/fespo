@@ -10,7 +10,13 @@ use Yii;
  * @property int $id
  * @property string $name
  * @property string $description
+ * @property string $content
  * @property string|null $image
+ * @property string $project_garantees_title
+ * @property string $project_garantees_description_1
+ * @property string $project_garantees_description_2
+ * @property string|null $slug
+ * @property int $order_by
  * @property int $status
  */
 class Projects extends \yii\db\ActiveRecord
@@ -29,10 +35,10 @@ class Projects extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description'], 'required'],
-            [['description'], 'string'],
-            [['status'], 'integer'],
-            [['name', 'image'], 'string', 'max' => 255],
+            [['name', 'description', 'content', 'project_garantees_title', 'project_garantees_description_1', 'project_garantees_description_2', 'order_by'], 'required'],
+            [['content', 'project_garantees_description_1', 'project_garantees_description_2'], 'string'],
+            [['order_by', 'status'], 'integer'],
+            [['name', 'description', 'image', 'project_garantees_title', 'slug'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,10 +49,38 @@ class Projects extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'description' => 'Description',
-            'image' => 'Image',
-            'status' => 'Status',
+            'name' => 'Название',
+            'description' => 'Подзаголовок',
+            'content' => 'Контент',
+            'image' => 'Изображение',
+            'project_garantees_title' => 'Заголовок гарантии',
+            'project_garantees_description_1' => 'Описание гарантий проекта 1',
+            'project_garantees_description_2' => 'Описание гарантий проекта 2',
+            'slug' => 'Slug',
+            'order_by' => 'Порядок сортировки',
+            'status' => 'Статус',
         ];
+    }
+    public function getProjectStats(){
+        return $this->hasMany(ProjectStats::className(),['project_id'=>'id'])->all();
+    }
+    public function getRandomProjects($limit)
+    {
+        return self::find()->where(['status' => 1])->orderBy('RAND()')->limit($limit)->all();
+    }
+
+    public function findById($id)
+    {
+        return self::findOne($id);
+    }
+
+    public function getTotalProjectsCount()
+    {
+        return self::find()->where(['status' => 1])->count();
+    }
+
+    public function getPaginatedProjects($pagination)
+    {
+        return self::find()->where(['status' => 1])->offset($pagination->offset)->limit($pagination->limit)->all();
     }
 }

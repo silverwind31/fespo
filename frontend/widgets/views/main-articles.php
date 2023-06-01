@@ -15,6 +15,6 @@
                 <?php endforeach; ?>
             <?php endif; ?>
         </div>
-        <a href="#" class="mainarticles__all btn">Все статьи</a>
+        <a href="<?=\yii\helpers\Url::to(['/articles'])?>" class="mainarticles__all btn">Все статьи</a>
     </div><!-- end center-wrapper -->
 </section><!-- end mainarticles -->

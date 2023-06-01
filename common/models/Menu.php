@@ -46,7 +46,7 @@ class Menu extends \yii\db\ActiveRecord
             'title' => 'Название',
             'link' => 'Ссылка',
             'position' => 'Позиция',
-            'order_by' => 'Очередность',
+            'order_by' => 'Порядок сортировки',
             'status' => 'Статус',
         ];
     }

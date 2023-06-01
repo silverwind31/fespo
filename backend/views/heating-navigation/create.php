@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\HeatingNavigation $model */
 
-$this->title = 'Create Heating Navigation';
-$this->params['breadcrumbs'][] = ['label' => 'Heating Navigations', 'url' => ['index']];
+$this->title = 'Добавить новый';
+$this->params['breadcrumbs'][] = ['label' => 'Навигация', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="heating-navigation-create">

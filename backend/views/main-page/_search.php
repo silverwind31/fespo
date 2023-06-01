@@ -17,31 +17,33 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'main_top_text') ?>
+    <?= $form->field($model, 'top_text') ?>
 
-    <?= $form->field($model, 'main_top_description') ?>
+    <?= $form->field($model, 'top_description') ?>
 
-    <?= $form->field($model, 'main_block_title') ?>
+    <?= $form->field($model, 'block_title') ?>
 
-    <?= $form->field($model, 'main_block_subtitle') ?>
+    <?= $form->field($model, 'block_subtitle') ?>
 
-    <?php // echo $form->field($model, 'main_block_image') ?>
+    <?php // echo $form->field($model, 'block_first_image') ?>
 
-    <?php // echo $form->field($model, 'main_block_feature_1_title') ?>
+    <?php // echo $form->field($model, 'block_feature_1_title') ?>
 
-    <?php // echo $form->field($model, 'main_block_feature_1_subtitle') ?>
+    <?php // echo $form->field($model, 'block_feature_1_subtitle') ?>
 
-    <?php // echo $form->field($model, 'main_block_feature_2_title') ?>
+    <?php // echo $form->field($model, 'block_feature_2_title') ?>
 
-    <?php // echo $form->field($model, 'main_block_feature_2_subtitle') ?>
+    <?php // echo $form->field($model, 'block_feature_2_subtitle') ?>
 
-    <?php // echo $form->field($model, 'main_block_feature_3_title') ?>
+    <?php // echo $form->field($model, 'block_feature_3_title') ?>
 
-    <?php // echo $form->field($model, 'main_block_feature_3_subtitle') ?>
+    <?php // echo $form->field($model, 'block_feature_3_subtitle') ?>
 
-    <?php // echo $form->field($model, 'second_block_content') ?>
+    <?php // echo $form->field($model, 'block_content_caption') ?>
 
-    <?php // echo $form->field($model, 'second_block_image') ?>
+    <?php // echo $form->field($model, 'block_content') ?>
+
+    <?php // echo $form->field($model, 'block_second_image') ?>
 
     <?php // echo $form->field($model, 'about_company_title') ?>
 

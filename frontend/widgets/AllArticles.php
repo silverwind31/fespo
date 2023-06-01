@@ -13,17 +13,16 @@ class AllArticles extends Widget
 {
     public function run()
     {
-        $articles = new Articles();
-        $query = $articles->getAllArticles();
-        $countQuery = clone $query;
+        $articlesModel = new Articles();
+
+        $totalCount = $articlesModel->getTotalArticlesCount();
+
         $pagination = new Pagination([
-            'totalCount' => $countQuery->count(),
+            'totalCount' => $totalCount,
             'pageSize' => 9,
         ]);
 
-        $models = $query->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+        $models = $articlesModel->getPaginatedArticles($pagination);
 
         foreach ($models as $model) {
             $model->published_date = StaticFunctions::formatPublishedDate($model->published_date);

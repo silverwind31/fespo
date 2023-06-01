@@ -11,6 +11,7 @@ use Yii;
  * @property string $name
  * @property string $email
  * @property string $phone
+ * @property int $status
  */
 class Orders extends \yii\db\ActiveRecord
 {
@@ -29,6 +30,7 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'phone'], 'required'],
+            [['status'], 'integer'],
             [['name', 'email'], 'string', 'max' => 255],
             [['phone'], 'string', 'max' => 30],
         ];
@@ -41,9 +43,17 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Имя',
             'email' => 'Email',
-            'phone' => 'Phone',
+            'phone' => 'Телефон',
+            'status' => 'Статус',
         ];
+    }
+    public function saveForm()
+    {
+        if ($this->validate()) {
+            return $this->save();
+        }
+        return false;
     }
 }

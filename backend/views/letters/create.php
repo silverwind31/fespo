@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Letters $model */
 
-$this->title = 'Create Letters';
-$this->params['breadcrumbs'][] = ['label' => 'Letters', 'url' => ['index']];
+$this->title = 'Создать письмо';
+$this->params['breadcrumbs'][] = ['label' => 'Письмена', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="letters-create">

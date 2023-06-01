@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\HeatingSlider $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Heating Sliders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - подогрев полей', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,11 +30,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
+            'id',
             'title',
             'description',
-            'image',
-            'status',
+            [
+                'attribute'=>'image',
+
+                'value'=>function($data){
+                    $image = \common\components\StaticFunctions::getImage($data->image,'heating-slider',$data->id);
+                    return "<img src='$image' style='height: 150px' alt='<?=$data->image?>'>";
+                },
+                'format'=>"html"
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('span', $model->status ? 'Активен' : 'Не активен', [
+                        'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                    ]);
+                },
+            ],
         ],
         ]) ?>
     </div>

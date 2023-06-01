@@ -1,3 +1,7 @@
+<?php
+$this->title = 'Статьи - ' . $model->title;
+
+?>
 <div class="top_bg" style="background-image: url('/img/articles-top-image.jpg');"></div>
 
 <div class="main">
@@ -6,7 +10,7 @@
             <ul class="breadcrumbs__list">
                 <li><a href="<?=\yii\helpers\Url::home()?>">Главная</a></li>
                 <li><a href="<?=\yii\helpers\Url::to(['/articles'])?>">Статьи</a></li>
-                <li><?=$model->title?></li>
+                <?= !empty($model->title) ? "<li>{$model->title}</li>" : "" ?>
             </ul>
         </div>
         <h1 class="main__title title_2">Статьи</h1>

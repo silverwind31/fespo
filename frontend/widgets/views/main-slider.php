@@ -1,8 +1,8 @@
 <section class="promo">
     <div class="promoslider">
-        <?php if(!empty($promoSlides)): ?>
-            <?php foreach ($promoSlides as $slide): ?>
-                <?php $image = \common\components\StaticFunctions::getImage($slide->image, 'promo-slider', $slide->id) ?>
+        <?php if(!empty($mainSlides)): ?>
+            <?php foreach ($mainSlides as $slide): ?>
+                <?php $image = \common\components\StaticFunctions::getImage($slide->image, 'main-slider', $slide->id) ?>
                 <div class="promoslider__slide">
                     <div class="promoslider__image"><img src='<?=$image?>' alt='img'></div>
                     <div class="promoslider__content">

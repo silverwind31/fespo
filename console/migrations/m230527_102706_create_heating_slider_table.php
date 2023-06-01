@@ -14,6 +14,10 @@ class m230527_102706_create_heating_slider_table extends Migration
     {
         $this->createTable('{{%heating_slider}}', [
             'id' => $this->primaryKey(),
+            'title' => $this->string(255)->notNull(),
+            'description' => $this ->string(255)->notNull(),
+            'image' => $this->string(255)->null(),
+            'status'=>$this->tinyInteger(2)->notNull()->defaultValue(1),
         ]);
     }
 

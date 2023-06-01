@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
+use common\components\StaticFunctions;
 use common\models\HeatingNavigation;
 use common\models\HeatingNavigationSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * HeatingNavigationController implements the CRUD actions for HeatingNavigation model.
@@ -62,12 +64,22 @@ class HeatingNavigationController extends Controller
      */
     public function actionCreate()
     {
+        if (HeatingNavigation::find()->count() >= 7) {
+            \Yii::$app->session->setFlash('error', 'Достигнут максимальный предел в 7 записей.');
+            return $this->redirect(['index']);
+        }
         $model = new HeatingNavigation();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                \Yii::$app->session->setFlash('success','Успешно добавлено!');
-                return $this->redirect(['index', 'id' => $model->id]);
+                $image = UploadedFile::getInstance($model, 'image');
+                if($image){
+                    $model->image = StaticFunctions::saveImage($image, 'heating-navigation', $model->id);
+                }
+                if($model->save()){
+                    \Yii::$app->session->setFlash('success','Успешно добавлено!');
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -88,10 +100,21 @@ class HeatingNavigationController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldImage = $model->image;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash('success','Успешно обновлено!');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $image = UploadedFile::getInstance($model, 'image');
+            if($image){
+                $model->image = StaticFunctions::saveImage($image, 'heating-navigation',$model->id);
+                StaticFunctions::deleteImage($oldImage,'heating-navigation',$model->id);
+            }else{
+                $model->image = $oldImage;
+            }
+
+            if($model->save()){
+                \Yii::$app->session->setFlash('success','Успешно обновлено!');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
@@ -108,9 +131,15 @@ class HeatingNavigationController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $image = $model->image;
 
-        return $this->redirect(['index']);
+        if($model->delete()){
+            StaticFunctions::deleteImage($image,'heating-navigation',$model->id);
+            return $this->redirect(['index']);
+        }else{
+            print_r($model->errors);
+        }
     }
 
     /**

@@ -35,10 +35,11 @@ class UserController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $dataProvider->pagination->pageSize = 10;
-
+        $statusLabels = User::getStatusOptions();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'statusLabels' => $statusLabels,
         ]);
     }
 
@@ -50,8 +51,10 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $statusLabels = User::getStatusOptions();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'statusLabels'=> $statusLabels
         ]);
     }
 
@@ -65,9 +68,13 @@ class UserController extends Controller
         $model = new User();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                \Yii::$app->session->setFlash('success','Успешно добавлено!');
-                return $this->redirect(['index', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
+
+                if($model->save()){
+                    \Yii::$app->session->setFlash('success','Успешно добавлено!');
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -88,10 +95,25 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldPassword = $model->password_hash;
+        $model->password_hash = null;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash('success','Успешно обновлено!');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if (!empty($model->password_hash)) {
+                if (Yii::$app->security->validatePassword($model->password_hash, $oldPassword)) {
+                    $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
+                } else {
+                    Yii::$app->user->logout();
+                    return $this->redirect(['login']);
+                }
+            } else {
+                $model->password_hash = $oldPassword;
+            }
+
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', 'Успешно обновлено!');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
@@ -108,7 +130,14 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+
+        $model = $this->findModel($id);
+
+        if ($model->id == 1) {
+            Yii::$app->session->setFlash('error', 'Нельзя удалить этого пользователя.');
+            return $this->redirect(['index']);
+        }
+        $model->delete();
 
         return $this->redirect(['index']);
     }

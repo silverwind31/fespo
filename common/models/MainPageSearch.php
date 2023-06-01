@@ -18,7 +18,7 @@ class MainPageSearch extends MainPage
     {
         return [
             [['id'], 'integer'],
-            [['main_top_text', 'main_top_description', 'main_block_title', 'main_block_subtitle', 'main_block_image', 'main_block_feature_1_title', 'main_block_feature_1_subtitle', 'main_block_feature_2_title', 'main_block_feature_2_subtitle', 'main_block_feature_3_title', 'main_block_feature_3_subtitle', 'second_block_content', 'second_block_image', 'about_company_title', 'about_company_content', 'about_company_image'], 'safe'],
+            [['top_text', 'top_description', 'block_title', 'block_subtitle', 'block_first_image', 'block_feature_1_title', 'block_feature_1_subtitle', 'block_feature_2_title', 'block_feature_2_subtitle', 'block_feature_3_title', 'block_feature_3_subtitle', 'block_content_caption', 'block_content', 'block_second_image', 'about_company_title', 'about_company_content', 'about_company_image'], 'safe'],
         ];
     }
 
@@ -61,19 +61,20 @@ class MainPageSearch extends MainPage
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'main_top_text', $this->main_top_text])
-            ->andFilterWhere(['like', 'main_top_description', $this->main_top_description])
-            ->andFilterWhere(['like', 'main_block_title', $this->main_block_title])
-            ->andFilterWhere(['like', 'main_block_subtitle', $this->main_block_subtitle])
-            ->andFilterWhere(['like', 'main_block_image', $this->main_block_image])
-            ->andFilterWhere(['like', 'main_block_feature_1_title', $this->main_block_feature_1_title])
-            ->andFilterWhere(['like', 'main_block_feature_1_subtitle', $this->main_block_feature_1_subtitle])
-            ->andFilterWhere(['like', 'main_block_feature_2_title', $this->main_block_feature_2_title])
-            ->andFilterWhere(['like', 'main_block_feature_2_subtitle', $this->main_block_feature_2_subtitle])
-            ->andFilterWhere(['like', 'main_block_feature_3_title', $this->main_block_feature_3_title])
-            ->andFilterWhere(['like', 'main_block_feature_3_subtitle', $this->main_block_feature_3_subtitle])
-            ->andFilterWhere(['like', 'second_block_content', $this->second_block_content])
-            ->andFilterWhere(['like', 'second_block_image', $this->second_block_image])
+        $query->andFilterWhere(['like', 'top_text', $this->top_text])
+            ->andFilterWhere(['like', 'top_description', $this->top_description])
+            ->andFilterWhere(['like', 'block_title', $this->block_title])
+            ->andFilterWhere(['like', 'block_subtitle', $this->block_subtitle])
+            ->andFilterWhere(['like', 'block_first_image', $this->block_first_image])
+            ->andFilterWhere(['like', 'block_feature_1_title', $this->block_feature_1_title])
+            ->andFilterWhere(['like', 'block_feature_1_subtitle', $this->block_feature_1_subtitle])
+            ->andFilterWhere(['like', 'block_feature_2_title', $this->block_feature_2_title])
+            ->andFilterWhere(['like', 'block_feature_2_subtitle', $this->block_feature_2_subtitle])
+            ->andFilterWhere(['like', 'block_feature_3_title', $this->block_feature_3_title])
+            ->andFilterWhere(['like', 'block_feature_3_subtitle', $this->block_feature_3_subtitle])
+            ->andFilterWhere(['like', 'block_content_caption', $this->block_content_caption])
+            ->andFilterWhere(['like', 'block_content', $this->block_content])
+            ->andFilterWhere(['like', 'block_second_image', $this->block_second_image])
             ->andFilterWhere(['like', 'about_company_title', $this->about_company_title])
             ->andFilterWhere(['like', 'about_company_content', $this->about_company_content])
             ->andFilterWhere(['like', 'about_company_image', $this->about_company_image]);

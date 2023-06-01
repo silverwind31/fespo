@@ -17,8 +17,8 @@ class HeatingNavigationSearch extends HeatingNavigation
     public function rules()
     {
         return [
-            [['id', 'section_id', 'order_by'], 'integer'],
-            [['title', 'image'], 'safe'],
+            [['id', 'order_by'], 'integer'],
+            [['title', 'section_id', 'image'], 'safe'],
         ];
     }
 
@@ -59,11 +59,11 @@ class HeatingNavigationSearch extends HeatingNavigation
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'section_id' => $this->section_id,
             'order_by' => $this->order_by,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'section_id', $this->section_id])
             ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;

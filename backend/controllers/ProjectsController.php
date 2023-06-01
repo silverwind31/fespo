@@ -2,12 +2,20 @@
 
 namespace backend\controllers;
 
+use common\components\StaticFunctions;
+use common\models\Model;
 use common\models\Projects;
 use common\models\ProjectsSearch;
+use common\models\ProjectStats;
+use yii\bootstrap5\ActiveForm;
+use yii\db\Exception;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\web\UploadedFile;
 
 /**
  * ProjectsController implements the CRUD actions for Projects model.
@@ -33,6 +41,8 @@ class ProjectsController extends Controller
     {
         $searchModel = new ProjectsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $dataProvider->pagination->pageSize = 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -61,11 +71,56 @@ class ProjectsController extends Controller
     public function actionCreate()
     {
         $model = new Projects();
+        $projectStats = [new ProjectStats()];
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                \Yii::$app->session->setFlash('success','Успешно добавлено!');
-                return $this->redirect(['index', 'id' => $model->id]);
+                $projectStats = Model::createMultiple(ProjectStats::classname());
+                Model::loadMultiple($projectStats, Yii::$app->request->post());
+
+                // ajax validation
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ArrayHelper::merge(
+                        ActiveForm::validateMultiple($projectStats),
+                        ActiveForm::validate($model)
+                    );
+                }
+
+                $valid = $model->validate();
+                $valid = Model::validateMultiple($projectStats) && $valid;
+
+                if ($valid) {
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        if ($flag = $model->save(false)) {
+                            foreach ($projectStats as $projectStat) {
+                                $projectStat->project_id = $model->id;
+                                if (! ($flag = $projectStat->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+                        }
+                        if ($flag) {
+                            $transaction->commit();
+
+                        }
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                    }
+                }
+
+                $image = UploadedFile::getInstance($model,'image');
+                if($image){
+                    $model->image = StaticFunctions::saveImage($image,'projects',$model->id);
+                }
+                if($model->save()){
+                    \Yii::$app->session->setFlash('success','Успешно добавлено!');
+                    return $this->redirect(['index']);
+                }else{
+                    return false;
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -73,6 +128,7 @@ class ProjectsController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'projectStats'=>(empty($projectStats)) ? [new ProjectStats()] : $projectStats
         ]);
     }
 
@@ -87,15 +143,70 @@ class ProjectsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash('success','Успешно обновлено!');
-            return $this->redirect(['view', 'id' => $model->id]);
+        $oldImage = $model->image;
+        $projectStats = $model->projectStats;
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            $oldIDs = ArrayHelper::map($projectStats, 'id', 'id');
+            $projectStats = Model::createMultiple(ProjectStats::classname(), $projectStats);
+            Model::loadMultiple($projectStats, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($projectStats, 'id', 'id')));
+
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($projectStats),
+                    ActiveForm::validate($model)
+                );
+            }
+
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($projectStats) && $valid;
+
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            ProjectStats::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($projectStats as $projectStat) {
+                            $projectStat->project_id = $model->id;
+                            if (! ($flag = $projectStat->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
+
+            $image = UploadedFile::getInstance($model,'image');
+            if($image){
+                $model->image = StaticFunctions::saveImage($image,'projects',$model->id);
+                StaticFunctions::deleteImage($oldImage,'projects',$model->id);
+            }else{
+                $model->image = $oldImage;
+            }
+            if($model->save()){
+                \Yii::$app->session->setFlash('success','Успешно обновлено!');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'projectStats'=>(empty($projectStats)) ? [new ProjectStats()] : $projectStats
         ]);
     }
+
 
     /**
      * Deletes an existing Projects model.
@@ -106,11 +217,21 @@ class ProjectsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $image = $model->image;
 
-        return $this->redirect(['index']);
+        $stats = ProjectStats::find()->where(['project_id' => $id])->all();
+        foreach ($stats as $stat) {
+            $stat->delete();
+        }
+
+        if ($model->delete()) {
+            StaticFunctions::deleteImage($image, 'projects', $model->id);
+            return $this->redirect(['index']);
+        } else {
+            print_r($model->errors);
+        }
     }
-
     /**
      * Finds the Projects model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -127,3 +248,6 @@ class ProjectsController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
+
+
+

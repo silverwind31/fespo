@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "heating_navigation".
  *
  * @property int $id
- * @property int $section_id
  * @property string $title
+ * @property string $section_id
  * @property string|null $image
  * @property int $order_by
  */
@@ -29,9 +29,9 @@ class HeatingNavigation extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['section_id', 'title', 'order_by'], 'required'],
-            [['section_id', 'order_by'], 'integer'],
-            [['title', 'image'], 'string', 'max' => 255],
+            [['title', 'section_id', 'order_by'], 'required'],
+            [['order_by'], 'integer'],
+            [['title', 'section_id', 'image'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,10 +42,14 @@ class HeatingNavigation extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'section_id' => 'Section ID',
-            'title' => 'Title',
-            'image' => 'Image',
-            'order_by' => 'Order By',
+            'title' => 'Заголовок',
+            'section_id' => 'ID блока',
+            'image' => 'Изображение',
+            'order_by' => 'Порядок сортировки',
         ];
+    }
+
+    public function getAllNavs(){
+        return self::find()->orderBy('order_by', SORT_ASC)->all();
     }
 }

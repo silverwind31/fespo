@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\AboutCompany $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'About Companies', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'О компании', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -34,9 +34,23 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'block_left_content:ntext',
             'block_right_content:ntext',
-            'main_image',
+            [
+                'attribute' => 'main_image',
+                'value' => function($data) {
+                    $image = \common\components\StaticFunctions::getImage($data->main_image, 'about-company', $data->id);
+                    return "<img src='$image' style='max-height: 200px' alt='{$data->main_image}'>";
+                },
+                'format' => "html"
+            ],
             'block_middle_content:ntext',
-            'info_image',
+            [
+                'attribute' => 'info_image',
+                'value' => function($data) {
+                    $image = \common\components\StaticFunctions::getImage($data->info_image, 'about-company', $data->id);
+                    return "<img src='$image' style='max-width: 150px' alt='{$data->info_image}'>";
+                },
+                'format' => "html"
+            ],
             'block_bottom_description:ntext',
         ],
         ]) ?>

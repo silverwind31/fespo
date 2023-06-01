@@ -2,6 +2,12 @@
 return [
     'frontend' => 'http://f.fespo',
     'backend' => 'http://b.fespo',
+    'ckFinder' => 'http://f.fespo',
+    'user_status' =>[
+        0 => 'deleted',
+        9 => 'Неактивный',
+        10 => 'Активный'
+    ],
     'menu_positions'=>[
         1 => 'HEADER_MENU',
         2 => 'FOOTER_MENU',

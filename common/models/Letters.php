@@ -39,8 +39,11 @@ class Letters extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image' => 'Image',
-            'status' => 'Status',
+            'image' => 'Изображение',
+            'status' => 'Статус',
         ];
+    }
+    public function getAllLetters(){
+        return self::find()->where(['status' => 1])->all();
     }
 }

@@ -31,16 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= "<?= " ?>Html::a(<?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, ['create'], ['class' => 'btn btn-success']) ?>
     </div>
     <div class="card-body">
-        <?= $generator->enablePjax ? "    <?php Pjax::begin(); ?>\n" : '' ?>
-        <?php if(!empty($generator->searchModelClass)): ?>
-            <?= "    <?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
+        <?= $generator->enablePjax ? "<?php Pjax::begin(); ?>\n" : '' ?>
+        <?php if (!empty($generator->searchModelClass)): ?>
+            <?= "<?php " . ($generator->indexWidgetType === 'grid' ? "// " : "") ?>echo $this->render('_search', ['model' => $searchModel]); ?>
         <?php endif; ?>
 
         <?php if ($generator->indexWidgetType === 'grid'): ?>
             <?= "<?= " ?>GridView::widget([
             'dataProvider' => $dataProvider,
             <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn',
+            'contentOptions' => ['class' => 'align-middle'],
+            ],
 
             <?php
             $count = 0;
@@ -64,39 +66,22 @@ $this->params['breadcrumbs'][] = $this->title;
             }
             ?>
             [
-
             'class' => 'yii\grid\ActionColumn',
-
             'header' => 'Actions',
-
             'template' => '{buttons}',
-
             'buttons' => [
-
             'buttons' => function ($url, $model) {
-
             $controller = Yii::$app->controller->id;
-
             $code = <<<BUTTONS
-
             <div class="d-flex align-items-center gap-1 justify-content-center">
-
                 <a href="/{$controller}/view?id={$model->id}" class="btn btn-info"><i class="fas fa-eye"></i></a>
                 <a href="/{$controller}/update?id={$model->id}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                <a href="/{$controller}/delete?id={$model->id}" class="btn btn-danger delete"><i class="fas fa-trash"></i></a>
-
+                <a href="/{$controller}/delete?id={$model->id}" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этот элемент?');"><i class="fas fa-trash"></i></a>
             </div>
-
             BUTTONS;
-
             return $code;
-
             }
-
-
-
             ],
-
             ],
             ],
             ]); ?>
@@ -110,6 +95,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         <?php endif; ?>
 
-        <?= $generator->enablePjax ? "    <?php Pjax::end(); ?>\n" : '' ?>
+        <?= $generator->enablePjax ? "<?php Pjax::end(); ?>\n" : '' ?>
     </div>
 </div>

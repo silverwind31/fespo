@@ -108,14 +108,63 @@ $(document).ready(function(){
 	        transitionEffect: "circular",
 	    });
 	});
-    $(".js-btn-completed").on("click", function(event){
-	    event.preventDefault();
-	    $.fancybox.open({
-	        src  : "#modal-completed",
-	        closeExisting: true,
-	        baseClass: "dark__bg",
-	        touch: false,
-	        transitionEffect: "circular",
-	    });
+
+	$('#callback-form').on('submit', function(e) {
+		e.preventDefault();
+		let form = $(this);
+		let formData = form.serialize();
+
+		if (form.find('input').filter(function() { return $(this).val() === ""; }).length === 0) {
+			$.ajax({
+				url: form.attr('action'),
+				method: 'post',
+				data: formData,
+				success: function(data) {
+					form[0].reset();
+					$.fancybox.open({
+						src  : "#modal-completed",
+						closeExisting: true,
+						baseClass: "dark__bg",
+						touch: false,
+						transitionEffect: "circular",
+					});
+				},
+				error: function() {
+
+				}
+			});
+		}
 	});
+
+
+	$('#modal-form').on('submit', function(e) {
+		e.preventDefault();
+		let form = $(this);
+		let formData = form.serialize();
+
+		if (form.find('input').filter(function() { return $(this).val() === ""; }).length === 0) {
+			$.ajax({
+				url: form.attr('action'),
+				method: 'post',
+				data: formData,
+				success: function(data) {
+					form[0].reset();
+					$.fancybox.open({
+						src  : "#modal-completed",
+						closeExisting: true,
+						baseClass: "dark__bg",
+						touch: false,
+						transitionEffect: "circular",
+					});
+				},
+				error: function() {
+
+				}
+			});
+		}
+	});
+
+
+
+
 }); 

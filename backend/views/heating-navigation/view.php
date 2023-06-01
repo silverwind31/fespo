@@ -1,5 +1,6 @@
 <?php
 
+use common\components\StaticFunctions;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var common\models\HeatingNavigation $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Heating Navigations', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Навигация', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,10 +31,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
-            'section_id',
+            'id',
             'title',
-            'image',
+            'section_id',
+            [
+                'attribute' => 'image',
+                'value' => function($data) {
+                    $image = StaticFunctions::getImage($data->image, 'heating-navigation', $data->id);
+                    return "<img src='$image' style='max-height: 150px' alt='" . $data->image . "'>";
+                },
+                'format' => "html"
+            ],
             'order_by',
         ],
         ]) ?>

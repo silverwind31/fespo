@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\Projects $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Проекты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,11 +30,33 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
+            'id',
             'name',
-            'description:ntext',
-            'image',
-            'status',
+            'description',
+            'content',
+            'project_garantees_title',
+            'project_garantees_description_1:ntext',
+            'project_garantees_description_2:ntext',
+            'slug',
+            'order_by',
+            [
+                'attribute'=>'image',
+
+                'value'=>function($data){
+                    $image = \common\components\StaticFunctions::getImage($data->image,'projects',$data->id);
+                    return "<img src='$image' style='max-height: 150px' alt='<?=$data->image?>'>";
+                },
+                'format'=>"html"
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('span', $model->status ? 'Активен' : 'Не активен', [
+                        'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                    ]);
+                },
+            ],
         ],
         ]) ?>
     </div>

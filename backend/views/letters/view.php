@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\Letters $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Letters', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Письмена', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,9 +30,24 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
-            'image',
-            'status',
+            'id',
+            [
+                'attribute' => 'image',
+                'value' => function ($data) {
+                    $image = \common\components\StaticFunctions::getImage($data->image, 'letters', $data->id);
+                    return "<img src='$image' style='max-width: 120px' alt='" . $data->image . "'>";
+                },
+                'format' => 'html',
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('span', $model->status ? 'Активен' : 'Не активен', [
+                        'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                    ]);
+                },
+            ],
         ],
         ]) ?>
     </div>

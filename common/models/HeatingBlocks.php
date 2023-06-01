@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $title
- * @property string $content
+ * @property string|null $content
  * @property int $order_by
  */
 class HeatingBlocks extends \yii\db\ActiveRecord
@@ -28,10 +28,9 @@ class HeatingBlocks extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'order_by'], 'required'],
-            [['content'], 'string'],
+            [['title', 'order_by'], 'required'],
+            [['title', 'content'], 'string'],
             [['order_by'], 'integer'],
-            [['title'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,9 +41,12 @@ class HeatingBlocks extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'content' => 'Content',
-            'order_by' => 'Order By',
+            'title' => 'Заголовок',
+            'content' => 'Содержимое',
+            'order_by' => 'Порядок сортировки',
         ];
+    }
+    public function getAllBlocks(){
+        return self::find()->orderBy('order_by', SORT_ASC)->all();
     }
 }

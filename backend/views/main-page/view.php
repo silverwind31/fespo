@@ -1,5 +1,6 @@
 <?php
 
+use common\components\StaticFunctions;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var common\models\MainPage $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Main Pages', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Главная страница', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,23 +31,45 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
-            'main_top_text:ntext',
-            'main_top_description:ntext',
-            'main_block_title',
-            'main_block_subtitle:ntext',
-            'main_block_image',
-            'main_block_feature_1_title',
-            'main_block_feature_1_subtitle',
-            'main_block_feature_2_title',
-            'main_block_feature_2_subtitle',
-            'main_block_feature_3_title',
-            'main_block_feature_3_subtitle',
-            'second_block_content:ntext',
-            'second_block_image',
+            'id',
+            'top_text:ntext',
+            'top_description:ntext',
+            'block_title',
+            'block_subtitle:ntext',
+            [
+                'attribute' => 'block_first_image',
+                'value' => function($data) {
+                    $first_image = StaticFunctions::getImage($data->block_first_image, 'main-page', $data->id);
+                    return "<img src='$first_image' style='max-height: 200px' alt='{$data->block_first_image}'>";
+                },
+                'format' => "html"
+            ],
+            [
+                'attribute' => 'block_second_image',
+                'value' => function($data) {
+                    $second_image = StaticFunctions::getImage($data->block_second_image, 'main-page', $data->id);
+                    return "<img src='$second_image' style='max-height: 200px' alt='{$data->block_second_image}'>";
+                },
+                'format' => "html"
+            ],
+            'block_feature_1_title',
+            'block_feature_1_subtitle',
+            'block_feature_2_title',
+            'block_feature_2_subtitle',
+            'block_feature_3_title',
+            'block_feature_3_subtitle',
+            'block_content_caption:ntext',
+            'block_content:ntext',
             'about_company_title',
             'about_company_content:ntext',
-            'about_company_image',
+            [
+                'attribute' => 'about_company_image',
+                'value' => function($data) {
+                    $about_image = StaticFunctions::getImage($data->about_company_image, 'main-page', $data->id);
+                    return "<img src='$about_image' style='max-height: 200px' alt='{$data->about_company_image}'>";
+                },
+                'format' => "html"
+            ],
         ],
         ]) ?>
     </div>

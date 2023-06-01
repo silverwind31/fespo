@@ -21,9 +21,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'description') ?>
 
+    <?= $form->field($model, 'content') ?>
+
     <?= $form->field($model, 'image') ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?php // echo $form->field($model, 'project_garantees_title') ?>
+
+    <?php // echo $form->field($model, 'project_garantees_description_1') ?>
+
+    <?php // echo $form->field($model, 'project_garantees_description_2') ?>
+
+    <?php // echo $form->field($model, 'slug') ?>
+
+    <?php // echo $form->field($model, 'order_by') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

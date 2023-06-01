@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\MainSlider $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Main Sliders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - главная страница', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -18,24 +18,40 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="d-flex align-items-center gap-2">
             <?= Html::a('Обновить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-            'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
-            'method' => 'post',
-            ],
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены, что хотите удалить этот элемент?',
+                    'method' => 'post',
+                ],
             ]) ?>
         </div>
     </div>
     <div class="card-body">
         <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-                    'id',
-            'title',
-            'description',
-            'image',
-            'status',
-        ],
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'title',
+                'description',
+                [
+                    'attribute'=>'image',
+
+                    'value'=>function($data){
+                        $image = \common\components\StaticFunctions::getImage($data->image,'main-slider',$data->id);
+                        return "<img src='$image' style='max-height: 150px' alt='<?=$data->image?>'>";
+                    },
+                    'format'=>"html"
+                ],
+                [
+                    'attribute' => 'status',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        return Html::tag('span', $model->status ? 'Активен' : 'Не активен', [
+                            'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                        ]);
+                    },
+                ],
+            ],
         ]) ?>
     </div>
 </div>

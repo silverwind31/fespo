@@ -4,28 +4,43 @@
 namespace frontend\widgets;
 
 
+use common\models\HeatingSlider;
+use common\models\mainSlider;
 use common\models\ProjectsSlider;
 use yii\base\Widget;
 
-class PromoSlider extends Widget
+class Slider extends Widget
 {
     public $type;
 
     public function run()
     {
-        $promoSliderModel = new \common\models\PromoSlider();
-        $promoSlides = $promoSliderModel->getAllSlides();
 
-        $projectsSliderModel = new ProjectsSlider();
-        $projectsSlides = $projectsSliderModel->getAllSlides();
+        if ($this->type === 'main') {
 
-        if ($this->type === 'promo') {
-            return $this->render('promo-slider', [
-                'promoSlides' => $promoSlides,
+            $mainSliderModel = new mainSlider();
+            $mainSlides = $mainSliderModel->getAllSlides();
+
+            return $this->render('main-slider', [
+                'mainSlides' => $mainSlides,
             ]);
+
         } elseif ($this->type === 'project') {
+
+            $projectsSliderModel = new ProjectsSlider();
+            $projectsSlides = $projectsSliderModel->getAllSlides();
+
             return $this->render('project-slider', [
                 'projectsSlides' => $projectsSlides,
+            ]);
+
+        }elseif($this->type === 'heating'){
+
+            $heatingSlidersModel = new HeatingSlider();
+            $heatingSlides = $heatingSlidersModel->getAllSlides();
+
+            return $this->render('heating-slider', [
+                'heatingSlides' => $heatingSlides,
             ]);
         }
     }

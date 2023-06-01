@@ -11,7 +11,8 @@ use yii\base\Widget;
 
 class MainArticles extends Widget
 {
-    public function run(){
+    public function run()
+    {
         $ArticlesModel = new Articles();
         $models = $ArticlesModel->getMainArticles();
         $months = Yii::$app->params['months'];
@@ -19,8 +20,10 @@ class MainArticles extends Widget
         foreach ($models as $model) {
             $model->published_date = StaticFunctions::formatPublishedDate($model->published_date);
         }
-        return $this->render('main-articles',[
-            'models' => $models
+
+        return $this->render('main-articles', [
+            'models' => $models,
+            'months' => $months,
         ]);
     }
 }

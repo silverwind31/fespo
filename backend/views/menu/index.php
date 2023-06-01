@@ -20,69 +20,56 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="card-body">
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        
-            <?= GridView::widget([
+
+        <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-//            'id',
-            'title',
-            'link',
-            [
-                'attribute'=>'position',
-                'value'=> function($data){
-                    return Yii::$app->params['menu_positions'][$data->position];
-                }
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'title',
+                'link',
+                [
+                    'attribute' => 'position',
+                    'value' => function($data) {
+                        return Yii::$app->params['menu_positions'][$data->position];
+                    }
+                ],
+                [
+                    'attribute' => 'status',
+                    'format' => 'html',
+                    'value' => function ($model) {
+                        return Html::tag('div', $model->status ? 'Активен' : 'Не активен', [
+                            'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                        ]);
+                    },
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header' => 'Действия',
+                    'template' => '{buttons}',
+                    'buttons' => [
+                        'buttons' => function ($url, $model) {
+                            $controller = Yii::$app->controller->id;
+                            $code = <<<BUTTONS
+                                <div class="d-flex align-items-center gap-1 justify-content-center">
+                                    <a href="/{$controller}/view?id={$model->id}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                    <a href="/{$controller}/update?id={$model->id}" class="btn btn-info"><i class="fas fa-edit"></i></a>
+                                    <a href="/{$controller}/delete?id={$model->id}" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этот элемент?');"><i class="fas fa-trash"></i></a>
+                                </div>
+                            BUTTONS;
+                            return $code;
+                        }
+                    ],
+                ],
             ],
-//            'order_by',
-            [
-                'attribute' => 'status',
-                'format' => 'html',
-                'value' => function ($model) {
-                    return Html::tag('div', $model->status ? 'Активен' : 'Не активен', [
-                        'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
-                    ]);
-                },
+            'layout' => "{items}\n<div class=\"d-flex justify-content-center\">{pager}</div>",
+            'pager' => [
+                'class' => 'yii\bootstrap5\LinkPager',
+                'prevPageCssClass' => 'page-item',
+                'nextPageCssClass' => 'page-item',
+                'linkOptions' => ['class' => 'page-link'],
             ],
-            [
+        ]); ?>
 
-            'class' => 'yii\grid\ActionColumn',
-
-            'header' => 'Действия',
-
-            'template' => '{buttons}',
-
-            'buttons' => [
-
-            'buttons' => function ($url, $model) {
-
-            $controller = Yii::$app->controller->id;
-
-            $code = <<<BUTTONS
-
-            <div class="d-flex align-items-center gap-1 justify-content-center">
-
-                <a href="/{$controller}/view?id={$model->id}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                <a href="/{$controller}/update?id={$model->id}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-                <a href="/{$controller}/delete?id={$model->id}" class="btn btn-danger delete"><i class="fas fa-trash"></i></a>
-
-            </div>
-
-            BUTTONS;
-
-            return $code;
-
-            }
-
-
-
-            ],
-
-            ],
-            ],
-            ]); ?>
-        
-            </div>
+    </div>
 </div>

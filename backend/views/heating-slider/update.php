@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\HeatingSlider $model */
 
-$this->title = 'Update Heating Slider: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Heating Sliders', 'url' => ['index']];
+$this->title = 'Обновить: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - подогрев полей', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="heating-slider-update">
 

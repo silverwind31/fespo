@@ -18,6 +18,7 @@ class m230522_181051_create_articles_table extends Migration
             'content' => $this ->text()->notNull(),
             'published_date'=>$this->dateTime()->defaultExpression('NOW()'),
             'image' => $this->string(255)->null(),
+            'slug' => $this->string(255)->null(),
             'status'=>$this->tinyInteger(2)->notNull()->defaultValue(1)
         ]);
     }

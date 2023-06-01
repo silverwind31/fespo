@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\MainSlider $model */
 
-$this->title = 'Create Main Slider';
-$this->params['breadcrumbs'][] = ['label' => 'Main Sliders', 'url' => ['index']];
+$this->title = 'Создать слайд';
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - главная страница', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="main-slider-create">

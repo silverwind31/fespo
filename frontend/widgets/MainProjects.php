@@ -4,12 +4,18 @@
 namespace frontend\widgets;
 
 
+use common\models\Projects;
 use yii\base\Widget;
 
-class MainAbout extends Widget
+class MainProjects extends Widget
 {
     public function run()
     {
-        return $this->render('main-about');
+        $projectModels = new Projects();
+        $models = $projectModels->getRandomProjects(5);
+
+        return $this->render('main-projects',[
+            'models' => $models
+        ]);
     }
 }

@@ -13,7 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap',
-        'styles/style.css'
+        'styles/style.css',
     ];
     public $js = [
         "scripts/libs/slick.min.js",

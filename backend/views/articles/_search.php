@@ -25,6 +25,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'image') ?>
 
+    <?php // echo $form->field($model, 'slug') ?>
+
     <?php // echo $form->field($model, 'status') ?>
 
     <div class="form-group">

@@ -12,24 +12,11 @@
         <?php endforeach; ?>
     <?php  endif;?>
 </div>
-<ul class="paginator">
-    <?php if ($pagination->getPageCount() > 1): ?>
-        <?php if ($pagination->getPage() > 0): ?>
-            <li><a href="<?= $pagination->createUrl($pagination->getPage() - 1) ?>"><img src='/img/icon-arrow-prev.svg' alt='img'></a></li>
-        <?php else: ?>
-            <li><img src='/img/icon-arrow-prev.svg' alt='img'></li>
-        <?php endif; ?>
-        <?php foreach (range(0, $pagination->getPageCount() - 1) as $page): ?>
-            <?php if ($page === $pagination->getPage()): ?>
-                <li class="current"><?= $page + 1 ?></li>
-            <?php else: ?>
-                <li><a href="<?= $pagination->createUrl($page) ?>"><?= $page + 1 ?></a></li>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        <?php if ($pagination->getPage() < $pagination->getPageCount() - 1): ?>
-            <li><a href="<?= $pagination->createUrl($pagination->getPage() + 1) ?>"><img src='/img/icon-arrow-next.svg' alt='img'></a></li>
-        <?php else: ?>
-            <li><img src='/img/icon-arrow-next.svg' alt='img'></li>
-        <?php endif; ?>
-    <?php endif; ?>
-</ul>
+<?= \yii\widgets\LinkPager::widget([
+    'pagination' => $pagination,
+    'prevPageLabel' => '<img src="/img/icon-arrow-prev.svg" alt="img">',
+    'nextPageLabel' => '<img src="/img/icon-arrow-next.svg" alt="img">',
+    'maxButtonCount' => 5,
+    'options' => ['class' => 'paginator'],
+    'activePageCssClass' => 'active',
+]) ?>

@@ -42,10 +42,13 @@ class MainSlider extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
-            'image' => 'Image',
-            'status' => 'Status',
+            'title' => 'Заголовок',
+            'description' => 'Подзаголовок',
+            'image' => 'Изображение',
+            'status' => 'Статус',
         ];
+    }
+    public function getAllSlides(){
+        return self::find()->where(['status' => 1])->all();
     }
 }

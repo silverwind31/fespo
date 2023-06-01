@@ -17,6 +17,7 @@ class m230522_143931_create_orders_table extends Migration
             'name' => $this->string(255)->notNull(),
             'email' => $this->string(255)->notNull(),
             'phone' => $this->string(30)->notNull(),
+            'status'=>$this->tinyInteger(2)->notNull()->defaultValue(1)
         ]);
     }
 

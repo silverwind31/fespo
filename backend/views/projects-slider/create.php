@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\ProjectsSlider $model */
 
-$this->title = 'Create Projects Slider';
-$this->params['breadcrumbs'][] = ['label' => 'Projects Sliders', 'url' => ['index']];
+$this->title = 'Создать слайд';
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - проекты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="projects-slider-create">

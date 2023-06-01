@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\WorkSlider $model */
 
-$this->title = 'Create Work Slider';
-$this->params['breadcrumbs'][] = ['label' => 'Work Sliders', 'url' => ['index']];
+$this->title = 'Создать слайд';
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - работа', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="work-slider-create">

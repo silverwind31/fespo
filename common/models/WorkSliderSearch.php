@@ -18,7 +18,7 @@ class WorkSliderSearch extends WorkSlider
     {
         return [
             [['id', 'status'], 'integer'],
-            [['description', 'url'], 'safe'],
+            [['description', 'image', 'url'], 'safe'],
         ];
     }
 
@@ -63,6 +63,7 @@ class WorkSliderSearch extends WorkSlider
         ]);
 
         $query->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'image', $this->image])
             ->andFilterWhere(['like', 'url', $this->url]);
 
         return $dataProvider;

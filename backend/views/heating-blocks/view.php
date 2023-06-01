@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\HeatingBlocks $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Heating Blocks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Блоки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
-            'title',
+            'id',
+            'title:ntext',
             'content:ntext',
             'order_by',
         ],

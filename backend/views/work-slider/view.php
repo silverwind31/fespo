@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\WorkSlider $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Work Sliders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - работа', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,10 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
-            'description:ntext',
-            'status',
-            'url:url',
+            'id',
+            'description',
+            'url',
+            [
+                'attribute' => 'image',
+                'value' => function ($data) {
+                    $image = \common\components\StaticFunctions::getImage($data->image, 'work-slider', $data->id);
+                    return "<img src='$image' style='max-height: 150px' alt='" . $data->image . "'>";
+                },
+                'format' => 'html',
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('span', $model->status ? 'Активен' : 'Не активен', [
+                        'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                    ]);
+                },
+            ],
         ],
         ]) ?>
     </div>

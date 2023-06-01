@@ -62,6 +62,10 @@ class HeatingBlocksController extends Controller
      */
     public function actionCreate()
     {
+        if (HeatingBlocks::find()->count() >= 7) {
+            \Yii::$app->session->setFlash('error', 'Достигнут максимальный предел в 7 записей.');
+            return $this->redirect(['index']);
+        }
         $model = new HeatingBlocks();
 
         if ($this->request->isPost) {

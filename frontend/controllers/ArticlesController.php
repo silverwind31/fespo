@@ -6,8 +6,6 @@ namespace frontend\controllers;
 
 use common\components\StaticFunctions;
 use common\models\Articles;
-use Yii;
-use yii\data\Pagination;
 
 class ArticlesController extends MainController
 {

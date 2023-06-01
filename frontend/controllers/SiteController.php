@@ -2,8 +2,11 @@
 
 namespace frontend\controllers;
 
-use common\models\PromoSlider;
-use common\models\Settings;
+use common\models\AboutCompany;
+use common\models\ContactsPage;
+use common\models\HeatingBlocks;
+use common\models\HeatingNavigation;
+use common\models\MainPage;
 use Yii;
 
 /**
@@ -14,24 +17,35 @@ class SiteController extends MainController
     public function actionIndex()
     {
         Yii::$app->view->params['currentRoute'] = 'site/index';
-        $promoSliderModel = new PromoSlider();
-        $promoSlides = $promoSliderModel->getAllSlides();
+        $model = MainPage::findOneExistingModel();
 
-        return $this->render('index', [
-            'promoSlides' => $promoSlides,
+        return $this->render('index',[
+            'model' => $model
         ]);
     }
     public function actionAboutUs()
     {
-        return $this->render('about-us');
+        $model = AboutCompany::findOneExistingModel();
+        return $this->render('about-us',[
+            'model' => $model
+        ]);
     }
-    public function actionContacts(){
-        $settings = Settings::getAllSettings();
+    public function actionContacts()
+    {
+        $model = ContactsPage::findOneExistingModel();
         return $this->render('contacts', [
-            'settings' => $settings
+            'model' => $model
         ]);
     }
     public function actionFieldHeating(){
-        return $this->render('field-heating');
+        $fieldModels = new HeatingBlocks();
+        $models = $fieldModels->getAllBlocks();
+
+        $navModels = new HeatingNavigation();
+        $navs = $navModels->getAllNavs();
+        return $this->render('field-heating', [
+            'models' => $models,
+            'navs' => $navs
+        ]);
     }
 }

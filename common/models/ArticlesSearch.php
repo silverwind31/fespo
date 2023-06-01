@@ -18,7 +18,7 @@ class ArticlesSearch extends Articles
     {
         return [
             [['id', 'status'], 'integer'],
-            [['title', 'content', 'published_date', 'image'], 'safe'],
+            [['title', 'content', 'published_date', 'image', 'slug'], 'safe'],
         ];
     }
 
@@ -65,7 +65,8 @@ class ArticlesSearch extends Articles
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;
     }

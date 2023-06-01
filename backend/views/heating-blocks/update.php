@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\HeatingBlocks $model */
 
-$this->title = 'Update Heating Blocks: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Heating Blocks', 'url' => ['index']];
+$this->title = 'Обновить данные: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Блоки', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить данные';
 ?>
 <div class="heating-blocks-update">
 

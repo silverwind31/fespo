@@ -20,9 +20,9 @@
                 </ul>
             </nav>
             <div class="header-phones">
-                <?php if (!empty($settings)): ?>
-                    <a href="tel:<?= $settings['tel_1'] ?>" class="header-phones__item"><?= $settings['tel_1_title'] ?></a>
-                    <a href="tel:<?= $settings['tel_2'] ?>" class="header-phones__item"><?= $settings['tel_2_title'] ?></a>
+                <?php if (!empty($contactsPageModel)): ?>
+                    <a href="tel:<?= $contactsPageModel->phone_1 ?>" class="header-phones__item"><?=  $contactsPageModel->phone_1 ?></a>
+                    <a href="tel:<?=  $contactsPageModel->phone_2 ?>" class="header-phones__item"><?=  $contactsPageModel->phone_2 ?></a>
                 <?php endif; ?>
             </div>
         </div>

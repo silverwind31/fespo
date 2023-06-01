@@ -45,13 +45,18 @@ class AboutCompany extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'block_left_content' => 'Block Left Content',
-            'block_right_content' => 'Block Right Content',
-            'main_image' => 'Main Image',
-            'block_middle_content' => 'Block Middle Content',
-            'info_image' => 'Info Image',
-            'block_bottom_description' => 'Block Bottom Description',
+            'title' => 'Заголовок',
+            'block_left_content' => 'Верхное левое содержимое',
+            'block_right_content' => 'Верхное правое содержимое',
+            'main_image' => 'Главное изображение',
+            'block_middle_content' => 'Средное содержимое',
+            'info_image' => 'Информационное изображение',
+            'block_bottom_description' => 'Описание нижней части',
         ];
     }
+    public static function findOneExistingModel()
+    {
+        return static::find()->one();
+    }
+
 }

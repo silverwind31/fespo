@@ -9,8 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property string $description
- * @property int $status
+ * @property string|null $image
  * @property string $url
+ * @property int $status
  */
 class WorkSlider extends \yii\db\ActiveRecord
 {
@@ -31,7 +32,7 @@ class WorkSlider extends \yii\db\ActiveRecord
             [['description', 'url'], 'required'],
             [['description'], 'string'],
             [['status'], 'integer'],
-            [['url'], 'string', 'max' => 255],
+            [['image', 'url'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,9 +43,14 @@ class WorkSlider extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'description' => 'Description',
-            'status' => 'Status',
-            'url' => 'Url',
+            'description' => 'Контент',
+            'status' => 'Статус',
+            'url' => 'Ссылка',
+            'image' => 'Изображение',
         ];
+    }
+
+    public function getAllSlides(){
+        return self::find()->where(['status' => 1])->all();
     }
 }

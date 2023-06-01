@@ -14,6 +14,10 @@ class m230531_151443_create_heating_navigation_table extends Migration
     {
         $this->createTable('{{%heating_navigation}}', [
             'id' => $this->primaryKey(),
+            'title' => $this->string(255)->notNull(),
+            'section_id' => $this->string(255)->notNull(),
+            'image' => $this->string(255)->null(),
+            'order_by' => $this->tinyInteger(2)->notNull(),
         ]);
     }
 

@@ -7,6 +7,8 @@ use common\models\Articles;
 use common\models\ArticlesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
@@ -33,6 +35,8 @@ class ArticlesController extends Controller
     {
         $searchModel = new ArticlesSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $dataProvider->pagination->pageSize = 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,

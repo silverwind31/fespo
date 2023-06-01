@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\ContactsPage $model */
 
-$this->title = 'Create Contacts Page';
-$this->params['breadcrumbs'][] = ['label' => 'Contacts Pages', 'url' => ['index']];
+$this->title = 'Добавить данные';
+$this->params['breadcrumbs'][] = ['label' => 'Контакты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="contacts-page-create">

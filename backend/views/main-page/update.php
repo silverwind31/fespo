@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\MainPage $model */
 
-$this->title = 'Update Main Page: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Main Pages', 'url' => ['index']];
+$this->title = 'Обновить данные';
+$this->params['breadcrumbs'][] = ['label' => 'Главная страница', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить данные';
 ?>
 <div class="main-page-update">
 

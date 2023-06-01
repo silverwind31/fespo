@@ -1,5 +1,6 @@
 <?php
 
+use common\components\StaticFunctions;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -7,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var common\models\ProjectsSlider $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Projects Sliders', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - проекты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,11 +31,27 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
+            'id',
             'title',
             'description',
-            'image',
-            'status',
+            [
+                'attribute'=>'image',
+
+                'value'=>function($data){
+                    $image = StaticFunctions::getImage($data->image,'projects-slider',$data->id);
+                    return "<img src='$image' style='height: 150px' alt='<?=$data->image?>'>";
+                },
+                'format'=>"html"
+            ],
+            [
+                'attribute' => 'status',
+                'format' => 'html',
+                'value' => function ($model) {
+                    return Html::tag('span', $model->status ? 'Активен' : 'Не активен', [
+                        'class' => $model->status ? 'alert alert-success mb-0' : 'alert alert-danger mb-0'
+                    ]);
+                },
+            ],
         ],
         ]) ?>
     </div>

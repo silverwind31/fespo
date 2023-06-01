@@ -25,7 +25,6 @@ use yii\web\IdentityInterface;
  */
 class User extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
@@ -55,7 +54,8 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE]],
+            [['username', 'password_hash', 'email'], 'safe']
         ];
     }
 
@@ -209,5 +209,30 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    public static function getStatusOptions()
+    {
+        return [
+            self::STATUS_INACTIVE => 'Неактивный',
+            self::STATUS_ACTIVE => 'Активный',
+        ];
+    }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Имя пользователя',
+            'password_hash' => 'Хэш пароля',
+            'auth_key' => 'Ключ авторизации',
+            'password_reset_token' => 'Токен сброса пароля',
+            'email' => 'Email',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата обновления',
+            'verification_token' => 'Токен подтверждения',
+            'status' => 'Статус',
+        ];
     }
 }

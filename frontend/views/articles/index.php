@@ -1,3 +1,7 @@
+<?php
+$this->title = 'Статьи';
+
+?>
 <div class="top_bg" style="background-image: url('/img/articles-top-image.jpg');"></div>
 
 <div class="main">

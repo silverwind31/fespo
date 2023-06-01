@@ -1,15 +1,22 @@
-<section class="mainabout">
+<section class="mainprojects">
     <div class="center-wrapper">
-        <h2 class="mainabout__title title_2">О компании</h2>
-        <div class="mainabout__row">
-            <div class="mainabout__image"><img src="/img/mainabout-image.jpg" alt="img"></div>
-            <div class="mainabout__content">
-                <div class="mainabout__text">
-                    <p>Зарождение технологии началось в стенах МЭИ ТУ<br> в 2002-2003 годах, первые системы уже отработали более 15 лет без утечек и сбоев.</p>
-                    <p>Выполнена на стадионах различного уровня: олимпийский стадион «Фишт» г.Сочи, центральные стадионы крупных городов (Москва, Челябинск, Пермь, Тамбов…), тренировочные поля к ЧМ 2018 по футболу, футбольные поля профессиональных и любительских клубов, площадки для пляжных видов спорта, частные заказы.</p>
+        <h2 class="mainprojects__title title_2">Проектирование</h2>
+        <?php if(!empty($models)): ?>
+            <div class="mainprojects-carousel">
+                <?php foreach ($models as $model): ?>
+                    <?php $image = \common\components\StaticFunctions::getImage($model->image, 'projects', $model->id) ?>
+                    <div class="mainprojects-carousel__slide">
+                    <a href="<?=\yii\helpers\Url::to(['/projects/view', 'id' => $model->id])?>" class="mainprojects-carousel__item">
+                        <div class="project-item__image"><img src='<?=$image?>' alt='img'></div>
+                        <div class="project-item__content">
+                            <div class="project-item__title"><?=$model->name?></div>
+                            <div class="project-item__desc"><?=$model->description?></div>
+                        </div>
+                    </a>
                 </div>
-                <a href="<?=\yii\helpers\Url::to(['/about-us'])?>" class="mainabout__more btn">Подробнее</a>
+                <?php endforeach; ?>
             </div>
-        </div>
+        <?php endif; ?>
+        <a href="<?=\yii\helpers\Url::to(['/projects'])?>" class="mainprojects__all btn">Посмотреть все проекты</a>
     </div><!-- end center-wrapper -->
-</section><!-- end mainabout -->
+</section><!-- end mainprojects -->

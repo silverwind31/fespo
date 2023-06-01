@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var common\models\ContactsPage $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Contacts Pages', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Контакты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -30,17 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-                    'id',
+            'id',
             'title',
             'description:ntext',
             'address',
-            'legal_adress',
+            'legal_address',
             'email:email',
             'phone_1',
             'phone_2',
             'requisites',
-            'latitude',
-            'longitude',
+            'top_image',
+            'location',
         ],
         ]) ?>
     </div>

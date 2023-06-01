@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
+use common\components\StaticFunctions;
 use common\models\MainPage;
 use common\models\MainPageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use Yii;
-use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * MainPageController implements the CRUD actions for MainPage model.
@@ -35,10 +35,12 @@ class MainPageController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         $dataProvider->pagination->pageSize = 10;
+        $existingModel = MainPage::findOneExistingModel();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'existingModel' => $existingModel,
         ]);
     }
 
@@ -62,12 +64,34 @@ class MainPageController extends Controller
      */
     public function actionCreate()
     {
+        $existingModel = MainPage::findOneExistingModel();
+
+        if ($existingModel !== null) {
+            throw new NotFoundHttpException();
+        }
         $model = new MainPage();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                \Yii::$app->session->setFlash('success','Успешно добавлено!');
-                return $this->redirect(['index', 'id' => $model->id]);
+
+                $firstImage = UploadedFile::getInstance($model, 'block_first_image');
+                $secondImage = UploadedFile::getInstance($model, 'block_second_image');
+                $companyImage = UploadedFile::getInstance($model, 'about_company_image');
+
+                if ($firstImage) {
+                    $model->block_first_image = StaticFunctions::saveImage($firstImage, 'main-page', $model->id);
+                }
+                if ($secondImage) {
+                    $model->block_second_image = StaticFunctions::saveImage($secondImage, 'main-page', $model->id);
+                }
+                if ($companyImage) {
+                    $model->about_company_image = StaticFunctions::saveImage($companyImage, 'main-page', $model->id);
+                }
+
+                if ($model->save()) {
+                    \Yii::$app->session->setFlash('success', 'Успешно добавлено!');
+                    return $this->redirect(['index']);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -88,10 +112,40 @@ class MainPageController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $oldFirstImage = $model->block_first_image;
+        $oldSecondImage = $model->block_second_image;
+        $oldCompanyImage = $model->about_company_image;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            \Yii::$app->session->setFlash('success','Успешно обновлено!');
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $firstImage = UploadedFile::getInstance($model, 'block_first_image');
+            $secondImage = UploadedFile::getInstance($model, 'block_second_image');
+            $companyImage = UploadedFile::getInstance($model, 'about_company_image');
+
+            if ($firstImage) {
+                $model->block_first_image = StaticFunctions::saveImage($firstImage, 'main-page', $model->id);
+                StaticFunctions::deleteImage($oldFirstImage, 'main-page', $model->id);
+            } else {
+                $model->block_first_image = $oldFirstImage;
+            }
+
+            if ($secondImage) {
+                $model->block_second_image = StaticFunctions::saveImage($secondImage, 'main-page', $model->id);
+                StaticFunctions::deleteImage($oldSecondImage, 'main-page', $model->id);
+            } else {
+                $model->block_second_image = $oldSecondImage;
+            }
+
+            if ($companyImage) {
+                $model->about_company_image = StaticFunctions::saveImage($companyImage, 'main-page', $model->id);
+                StaticFunctions::deleteImage($oldCompanyImage, 'main-page', $model->id);
+            } else {
+                $model->about_company_image = $oldCompanyImage;
+            }
+
+            if ($model->save()) {
+                \Yii::$app->session->setFlash('success', 'Успешно обновлено!');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
@@ -108,9 +162,21 @@ class MainPageController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
-        return $this->redirect(['index']);
+        $firstImage = UploadedFile::getInstance($model, 'block_first_image');
+        $secondImage = UploadedFile::getInstance($model, 'block_second_image');
+        $companyImage = UploadedFile::getInstance($model, 'about_company_image');
+
+        if ($model->delete()) {
+            StaticFunctions::deleteImage($firstImage, 'main-page', $model->id);
+            StaticFunctions::deleteImage($secondImage, 'main-page', $model->id);
+            StaticFunctions::deleteImage($companyImage, 'main-page', $model->id);
+
+            return $this->redirect(['index']);
+        } else {
+            print_r($model->errors);
+        }
     }
 
     /**
@@ -129,3 +195,4 @@ class MainPageController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
+

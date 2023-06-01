@@ -1,157 +1,71 @@
-<section class="promo">
-    <div class="promoslider">
-        <div class="promoslider__slide">
-            <div class="promoslider__image"><img src='/img/content/promo/promo-slide2.jpg' alt='img'></div>
-            <div class="promoslider__content">
-                <div class="center-wrapper">
-                    <h1 class="promoslider__title">Подогрев футбольных полей</h1>
-                    <div class="promoslider__desc">ФЕСПО — российская продукция, разработанная для систем подогрева плоскостных сооружений</div>
-                    <a href="#" class="promoslider__btn btn">Оставить заявку</a>
-                </div>
-            </div>
-        </div>
-        <div class="promoslider__slide">
-            <div class="promoslider__image"><img src='/img/content/promo/promo-slide2.jpg' alt='img'></div>
-            <div class="promoslider__content">
-                <div class="center-wrapper">
-                    <h1 class="promoslider__title">Подогрев футбольных полей</h1>
-                    <div class="promoslider__desc">ФЕСПО — российская продукция, разработанная для систем подогрева плоскостных сооружений</div>
-                    <a href="#" class="promoslider__btn btn">Оставить заявку</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section><!-- end promo -->
+<?php
+
+use common\components\StaticFunctions;use frontend\widgets\Callback;
+use frontend\widgets\MainArticles;
+use frontend\widgets\MainContacts;
+use frontend\widgets\MainProjects;
+use frontend\widgets\Slider;
+use frontend\widgets\WorkSlider;
+
+$this->title = 'Подогрев полей';
+?>
+
+<?= Slider::widget(['type' => 'heating']) ?>
 
 <section class="main">
     <div class='center-wrapper'>
         <div class="breadcrumbs">
             <ul class="breadcrumbs__list">
-                <li><a href="#">Главная</a></li>
+                <li><a href="<?=\yii\helpers\Url::home()?>">Главная</a></li>
                 <li>Подогрев полей</li>
             </ul>
         </div>
         <div class="heating-nav">
             <div class="heating-nav__row">
-                <div class="heating-nav__col">
-                    <a href="#heating-section1" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image1.jpg' alt='img'></div>
-                        <div class="heating-nav__title">Что такое система подогрева полей</div>
+                <?php if(!empty($navs)): ?>
+                    <?php foreach ($navs as $nav): ?>
+                        <?php $image = StaticFunctions::getImage($nav->image, 'heating-navigation', $nav->id) ?>
+                        <div class="heating-nav__col">
+                    <a href="#<?=$nav->section_id?>" class="heating-nav__item scrollto">
+                        <div class="heating-nav__image"><img src='<?=$image?>' alt='img'></div>
+                        <div class="heating-nav__title"><?=$nav->title?></div>
                     </a>
                 </div>
-                <div class="heating-nav__col">
-                    <a href="#heating-section2" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image2.jpg' alt='img'></div>
-                        <div class="heating-nav__title">Какие бывают системы подогрева полей</div>
-                    </a>
-                </div>
-                <div class="heating-nav__col">
-                    <a href="#heating-section3" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image3.jpg' alt='img'></div>
-                        <div class="heating-nav__title">Важное о концепции подогрева</div>
-                    </a>
-                </div>
-                <div class="heating-nav__col">
-                    <a href="#heating-section4" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image4.jpg' alt='img'></div>
-                        <div class="heating-nav__title">Ошибки при проектировании</div>
-                    </a>
-                </div>
-                <div class="heating-nav__col">
-                    <a href="#heating-section5" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image5.jpg' alt='img'></div>
-                        <div class="heating-nav__title">Эксплуатация и обслуживание</div>
-                    </a>
-                </div>
-                <div class="heating-nav__col">
-                    <a href="#heating-section6" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image6.jpg' alt='img'></div>
-                        <div class="heating-nav__title">ИТП и Автоматика</div>
-                    </a>
-                </div>
-                <div class="heating-nav__col">
-                    <a href="#heating-section7" class="heating-nav__item scrollto">
-                        <div class="heating-nav__image"><img src='/img/heating-nav-image7.jpg' alt='img'></div>
-                        <div class="heating-nav__title">Монтаж и испытания</div>
-                    </a>
-                </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
-        <div id="heating-section1" class="heating-section">
-            <h2 class="heating-section__title">Что такое система<br> подогрева полей</h2>
-            <div class="heating-section__row">
-                <div class="heating-section__col">
-                    <p class="text-uppercase">Комплексное технологическое решение, предназначенное для использования спортивного сооружения в полной мере, в период межсезонья.</p>
-                </div>
-                <div class="heating-section__col">
-                    <p>Полностью монолитная система не подверженная коррозии и гниению – все элементы имеют одинаковое температурное удлинение, отсутствие резьбовых и компрессионных соединений. Греющие петли выпускаются под конкретную длину поля.</p>
-                    <p>Разработанный теплоноситель имеет только функциональные в рабочих режимах добавки и обладает люминесценцией, что облегчает поиск утечек. Обладает защитными свойствами для металлических поверхностей оборудования ИТП, не агрессивен к уплотнителям. Срок службы не менее 10 лет.</p>
-                </div>
-                <div class="heating-section__col">
-                    <div class="heating-section__image"><img src='/img/content/heating/heating-image1.jpg' alt='img'></div>
-                </div>
-                <div class="heating-section__col">
-                    <p>Подобранное оборудование ИТП имеет идеальную совместимость, что повышает эффективность и надежность по сравнению с экспериментальными проектами и решениями.</p>
-                    <p>В комплексе система имеет оптимально простое исполнение и проверенные решения, что делает её удобной и понятной в эксплуатации и обслуживании даже для неквалифицированного персонала.</p>
-                    <p>Универсальность системы позволяет с помощью изменения настроек автоматики адаптировать её к искусственным покрытиям с полузасыпанным ворсом, использованию резинового гранулята или с использованием геофилов. Отсутствует необходимость во вмешательство в оборудование ИТП или основание футбольного поля при замене типа покрытия или длины ворса.</p>
-                </div>
-            </div>
-        </div>
+        <?php if(!empty($models)): ?>
+            <?php foreach ($models as $model): ?>
+                <?php  if($model->order_by == 10):?>
+                    <div id="heating-section1" class="heating-section">
+                        <h2 class="heating-section__title"><?=$model->title?></h2>
+                        <div class="heating-section__row">
+                            <?=$model->content?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <br>
         <br>
-        <div id="heating-section2" class="heating-section">
-            <h2 class="heating-section__title">Какие бывают системы<br> подогрева полей</h2>
+    </div>
+    <?php if(!empty($models)): ?>
+        <?php foreach ($models as $model): ?>
+            <?php  if($model->order_by == 20):?>
+                <div id="heating-section2" class="heating-section">
+            <h2 class="heating-section__title"><?=$model->title?></h2>
             <div class="heating-section__row">
-                <div class="heating-section__col">
-                    <p class="text-uppercase">Для увеличения срока эксплуатации футбольных полей используются системы подогрева газонов.</p>
-                </div>
-                <div class="heating-section__col">
-                    <p>Система позволяет поддерживать игровые характеристики искусственного газона на протяжении всего зимнего периода, а для натурального — продлить срок его эксплуатации в осеннее время, сократить время подготовки в весеннее время и ускорить восстановление после игр.</p>
-                </div>
-                <div class="heating-section__col heating-section__col--full">
-                    <div class="heating-section__image"><img src='/img/content/heating/heating-image2.jpg' alt='img'></div>
-                </div>
-                <div class="heating-section__col">
-                    <p class="text-uppercase">Существуют жидкостные<br> и электрические системы подогрева.</p>
-                </div>
-                <div class="heating-section__col">
-                    <p>Электрические системы подогрева более эффективные, имеют гибкое управление, но из-за высокой себестоимости не получили широкого распространения. К тому же современные нагревательные кабели, используемые при строительстве, производятся за пределами нашей страны и возникают сложности с их доставкой, а порой это сейчас и невозможно.</p>
-                    <p>Та же кабельная продукция, которая производится в России, имеет меньшую надежность и эффективность. Основное преимущество электрической системы подогрева перед жидкостной – возможность использования со всеми амортизирующими подложками, используемыми с искусственными газонами.</p>
-                    <p>Жидкостные системы подогрева более распространены, имеют большое количество вариантов исполнения. В качестве греющих туб используются различные модификации полипропиленовых и полиэтиленовых труб.</p>
-                </div>
-                <div class="heating-section__col">
-                    <p>Полиэтиленовые трубы широко используются, благодаря популяризации известными брендами и неоспоримому качеству rautherm компании Rehau. При применении полиэтиленовых труб для коллектора применяют трубы из ПНД, PPR или стальные. Для соединения греющих труб и коллектора используются компрессионные фитинги, в большинстве случае изготавливаемые из металлов.</p>
-                    <p>Благодаря надежности соединений коллектор полипропиленовой системы располагают в теле футбольного поля и засыпают песком, а не за пределами в отдельном лотке, позволяющем осуществлять ревизию и увеличивая сроки и стоимость строительства.</p>
-                    <p>Из полипропиленовой продукции на мировом рынке широкой популярностью по праву пользуются фусиоленовые трубы фирмы Aquatherm, которые хорошо себя проявили на многих спортивных объектах и в России.</p>
-                </div>
-                <div class="heating-section__col">
-                    <div class="heating-section__image"><img src='/img/content/heating/heating-image3.jpg' alt='img'></div>
-                </div>
+                <?=$model->content?>
             </div>
         </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
     </div><!-- end center-wrapper -->
 </section><!-- end main -->
 
-<section class="mainprojects">
-    <div class="center-wrapper">
-        <h2 class="mainprojects__title title_2">Проектирование</h2>
-        <div class="mainprojects-carousel">
-            <div class="mainprojects-carousel__slide">
-                <a href="#" class="mainprojects-carousel__item"><img src="/img/content/projects/projects-image1.jpg" alt="img"></a>
-            </div>
-            <div class="mainprojects-carousel__slide">
-                <a href="#" class="mainprojects-carousel__item"><img src="/img/content/projects/projects-image2.jpg" alt="img"></a>
-            </div>
-            <div class="mainprojects-carousel__slide">
-                <a href="#" class="mainprojects-carousel__item"><img src="/img/content/projects/projects-image3.jpg" alt="img"></a>
-            </div>
-            <div class="mainprojects-carousel__slide">
-                <a href="#" class="mainprojects-carousel__item"><img src="/img/content/projects/projects-image2.jpg" alt="img"></a>
-            </div>
-        </div>
-        <a href="#" class="mainprojects__all btn">Посмотреть все проекты</a>
-    </div><!-- end center-wrapper -->
-</section><!-- end mainprojects -->
+<?= MainProjects::widget()?>
 
 <section class="heating-block">
     <div class='center-wrapper'>
@@ -237,29 +151,7 @@
     </div><!-- end center-wrapper -->
 </section><!-- end heating-block -->
 
-<section class="work">
-    <div class='center-wrapper'>
-        <h2 class="work__title">Как мы работаем</h2>
-        <div class="work-slider">
-            <div class="work-slider__slide">
-                <div class="work-section">
-                    <a href="https://www.youtube.com/watch?v=WNeLUngb-Xg" class="work-section__video fancybox"><img src='/img/work-slide1.jpg' alt='img'></a>
-                    <div class="work-section__desc">
-                        <p>Первая в России система для стандартного футбольного поля размерами 110 х72 метра, спроектированная под тепловую нагрузку 1 Гкал (поле №4 с искусственным газоном на стадионе им Э.А. Стрельцова (Торпедо) г. Москва).</p>
-                    </div>
-                </div>
-            </div>
-            <div class="work-slider__slide">
-                <div class="work-section">
-                    <a href="https://www.youtube.com/watch?v=WNeLUngb-Xg" class="work-section__video fancybox"><img src='/img/work-slide1.jpg' alt='img'></a>
-                    <div class="work-section__desc">
-                        <p>Первая в России система для стандартного футбольного поля размерами 110 х72 метра, спроектированная под тепловую нагрузку 1 Гкал (поле №4 с искусственным газоном на стадионе им Э.А. Стрельцова (Торпедо) г. Москва).</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- end center-wrapper -->
-</section><!-- end work -->
+<?= WorkSlider::widget()?>
 
 <section class="heating-block">
     <div class='center-wrapper'>
@@ -314,29 +206,7 @@
     </div><!-- end center-wrapper -->
 </section><!-- end heating-block -->
 
-<section class="callback">
-    <div class='center-wrapper'>
-        <h2 class="callback__title">У вас возникли вопросы?</h2>
-        <div class="callback__subtitle">Оставьте заявку на бесплатную консультацию</div>
-        <form action="#" class="callback-form">
-            <div class="callback-form__row">
-                <div class="callback-form__col">
-                    <input type="text" class="callback-form__input" placeholder="Имя">
-                </div>
-                <div class="callback-form__col">
-                    <input type="text" class="callback-form__input mask_phone" placeholder="Телефон">
-                </div>
-                <div class="callback-form__col">
-                    <input type="text" class="callback-form__input" placeholder="E-mail">
-                </div>
-                <div class="callback-form__col">
-                    <button type="submit" class="callback-form__btn btn btn--solid">Оставить заявку</button>
-                    <div class="callback-form__agreement">Нажимая на кнопку вы соглашаетесь<br> с <a href="#">политикой конфиденциальности</a></div>
-                </div>
-            </div>
-        </form>
-    </div><!-- end center-wrapper -->
-</section><!-- end callback -->
+<?=Callback::widget()?>
 
 <section class="heating-block">
     <div class='center-wrapper'>
@@ -369,60 +239,6 @@
     </div><!-- end center-wrapper -->
 </section><!-- end heating-block -->
 
-<section class="mainarticles">
-    <div class="center-wrapper">
-        <h2 class="mainarticles__title title_2">Статьи</h2>
-        <div class="mainarticles__list">
-            <div class="mainarticles-item">
-                <a href="#" class="mainarticles-item__image"><img src="/img/content/articles/articles-image1.jpg" alt="img"></a>
-                <div class="mainarticles-item__content">
-                    <div class="mainarticles-item__title"><a href="#">Первая в России система для стандартного футбольного поля размерами 110 х72 метра</a></div>
-                    <div class="mainarticles-item__date">4 февраля 2023</div>
-                </div>
-            </div>
-            <div class="mainarticles-item">
-                <a href="#" class="mainarticles-item__image"><img src="/img/content/articles/articles-image2.jpg" alt="img"></a>
-                <div class="mainarticles-item__content">
-                    <div class="mainarticles-item__title"><a href="#">Первая в России система для стандартного футбольного поля размерами 110 х72 метра</a></div>
-                    <div class="mainarticles-item__date">4 февраля 2023</div>
-                </div>
-            </div>
-            <div class="mainarticles-item">
-                <a href="#" class="mainarticles-item__image"><img src="/img/content/articles/articles-image3.jpg" alt="img"></a>
-                <div class="mainarticles-item__content">
-                    <div class="mainarticles-item__title"><a href="#">Первая в России система для стандартного футбольного поля размерами 110 х72 метра</a></div>
-                    <div class="mainarticles-item__date">4 февраля 2023</div>
-                </div>
-            </div>
-        </div>
-        <a href="#" class="mainarticles__all btn">Все статьи</a>
-    </div><!-- end center-wrapper -->
-</section><!-- end mainarticles -->
+<?= MainArticles::widget()?>
 
-<section class="maincontacts">
-    <div class="center-wrapper">
-        <h2 class="maincontacts__title title_2">Контакты</h2>
-        <div class="maincontacts__row">
-            <div class="maincontacts__info">
-                <div class="maincontacts__info-inner">
-                    <div class="maincontacts__block">
-                        <div class="maincontacts__caption">Адрес:</div>
-                        <div class="maincontacts__text">г. Москва, ул 3-я Тверская-Ямская, пер. Александра Невского д. 32</div>
-                    </div>
-                    <div class="maincontacts__block">
-                        <div class="maincontacts__caption">Телефон:</div>
-                        <div class="maincontacts__text"><a href="tel:+74958883211">+7 (495) 888-32-11</a></div>
-                        <div class="maincontacts__text"><a href="tel:+79550322518">+7 (955) 032-25-18 </a></div>
-                    </div>
-                    <div class="maincontacts__block">
-                        <div class="maincontacts__caption">Почта:</div>
-                        <div class="maincontacts__text"><a href="mailto:fespo@gmail.com">fespo@gmail.com</a></div>
-                    </div>
-                </div>
-            </div>
-            <div class="maincontacts__map">
-                <div id="map"><img src='/img/map.jpg' alt='img'></div>
-            </div>
-        </div>
-    </div><!-- end center-wrapper -->
-</section><!-- end maincontacts -->
+<?= MainContacts::widget()?>

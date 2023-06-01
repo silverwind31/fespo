@@ -2,9 +2,8 @@
 
 namespace frontend\widgets;
 
+use common\models\ContactsPage;
 use common\models\Menu;
-use common\models\Settings;
-use Yii;
 
 class Header extends \yii\base\Widget
 {
@@ -12,11 +11,12 @@ class Header extends \yii\base\Widget
     {
         $menuModel = new Menu();
         $frontMenus = $menuModel->getFrontMenus();
-        $settings = Settings::getAllSettings();
+
+        $contactsPageModel = ContactsPage::findOneExistingModel();
 
         return $this->render('header', [
             'frontMenus' => $frontMenus,
-            'settings' => $settings,
+            'contactsPageModel' => $contactsPageModel,
         ]);
     }
 }

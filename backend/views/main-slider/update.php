@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\MainSlider $model */
 
-$this->title = 'Update Main Slider: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Main Sliders', 'url' => ['index']];
+$this->title = 'Обновить: ' . $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Слайдер - главная страница', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Обновить';
 ?>
 <div class="main-slider-update">
 

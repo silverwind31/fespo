@@ -1,6 +1,7 @@
 <?php
 
-use dosamigos\ckeditor\CKEditor;
+use common\components\StaticFunctions;
+use Itstructure\CKEditor\CKEditor;
 use kartik\datetime\DateTimePicker;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
@@ -10,7 +11,7 @@ use yii\bootstrap5\ActiveForm;
 /** @var yii\bootstrap5\ActiveForm $form */
 ?>
 
-<div class="articles-form">
+<div class="articles-form mb-3">
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="row">
@@ -20,21 +21,39 @@ use yii\bootstrap5\ActiveForm;
                     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
                     <?= $form->field($model, 'content')->widget(CKEditor::className(), [
-                        'preset' => 'standard'
+                        'preset' => 'standard',
+                        'clientOptions' => [
+                            'height' => 200
+                        ]
                     ]); ?>
+
+                    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body">
-                    <label class="d-flex align-items-center flex-column mb-3 w-100">
-                        <?php $image = \common\components\StaticFunctions::getImage($model->image,'articles',$model->id) ?>
-                        <img src="<?=$image?>" alt="no photo" style="max-width: 100%; height: 200px">
-                        <?= $form->field($model, 'image')->fileInput(['hidden'=>true, 'class'=>'preview'])->label(false)?>
-                        <div class="btn btn-primary w-100">Загрузить изображение</div>
-                    </label>
-
+                    <div class="preview-container d-flex flex-column mb-3">
+                        <label>
+                            <?= $form->field($model, 'image', ['options' => ['class' => 'mb-2']])->fileInput(['hidden' => true, 'class' => 'preview'])->label(true) ?>
+                            <?php $image = StaticFunctions::getImage($model->image, 'articles', $model->id)?>
+                            <div class="preview-image mb-2 d-flex justify-content-center">
+                                <img src="<?= $image ?>" alt="no photo" style="max-width: 100%; height: 200px;">
+                            </div>
+                            <div class="d-flex gap-2 actions">
+                                <div class="btn btn-primary w-100 d-flex gap-2 align-items-center justify-content-center">
+                                    <i class="fa fa-file-upload"></i>
+                                    Выбрать ...
+                                </div>
+                                <button type="button" class="btn btn-danger w-100 reset-button d-flex gap-2 align-items-center justify-content-center">
+                                    <i class="fa fa-trash"></i>
+                                    Удалить
+                                </button>
+                            </div>
+                        </label>
+                    </div>
 
                     <?= $form->field($model, 'published_date')->widget(DateTimePicker::class, [
                         'options' => [
@@ -56,7 +75,6 @@ use yii\bootstrap5\ActiveForm;
                     ]) ?>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="form-group">

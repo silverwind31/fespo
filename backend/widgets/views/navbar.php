@@ -16,14 +16,6 @@
                     </div>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="fe-settings"></i>
-                        <span>Настройки</span>
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <!-- item-->
                     <a href="<?=\yii\helpers\Url::to('/site/logout')?>" class="dropdown-item notify-item">
                         <i class="fe-log-out"></i>
                         <span>Выйти из аккаунта</span>
@@ -60,8 +52,9 @@
                 </button>
             </li>
             <li>
-                <a href="/gii" class="btn btn-success">Gii</a>
+                <a href="/gii" class="btn btn-success">GII</a>
             </li>
+
         </ul>
         <div class="clearfix"></div>
     </div>

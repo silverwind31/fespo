@@ -17,8 +17,8 @@ class ProjectsSearch extends Projects
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'description', 'image'], 'safe'],
+            [['id', 'order_by', 'status'], 'integer'],
+            [['name', 'description', 'content', 'image', 'project_garantees_title', 'project_garantees_description_1', 'project_garantees_description_2', 'slug'], 'safe'],
         ];
     }
 
@@ -59,12 +59,18 @@ class ProjectsSearch extends Projects
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'order_by' => $this->order_by,
             'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'project_garantees_title', $this->project_garantees_title])
+            ->andFilterWhere(['like', 'project_garantees_description_1', $this->project_garantees_description_1])
+            ->andFilterWhere(['like', 'project_garantees_description_2', $this->project_garantees_description_2])
+            ->andFilterWhere(['like', 'slug', $this->slug]);
 
         return $dataProvider;
     }

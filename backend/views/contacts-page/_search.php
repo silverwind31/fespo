@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'address') ?>
 
-    <?= $form->field($model, 'legal_adress') ?>
+    <?= $form->field($model, 'legal_address') ?>
 
     <?php // echo $form->field($model, 'email') ?>
 
@@ -33,9 +33,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'requisites') ?>
 
-    <?php // echo $form->field($model, 'latitude') ?>
-
-    <?php // echo $form->field($model, 'longitude') ?>
+    <?php // echo $form->field($model, 'location') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

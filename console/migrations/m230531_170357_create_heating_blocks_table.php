@@ -14,6 +14,9 @@ class m230531_170357_create_heating_blocks_table extends Migration
     {
         $this->createTable('{{%heating_blocks}}', [
             'id' => $this->primaryKey(),
+            'title' => $this->text()->notNull(),
+            'content' => $this->text()->null(),
+            'order_by' => $this->tinyInteger(2)->notNull(),
         ]);
     }
 

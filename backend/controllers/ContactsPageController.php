@@ -36,9 +36,12 @@ class ContactsPageController extends Controller
 
         $dataProvider->pagination->pageSize = 10;
 
+        $existingModel = ContactsPage::findOneExistingModel();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'existingModel' => $existingModel,
         ]);
     }
 
@@ -62,12 +65,18 @@ class ContactsPageController extends Controller
      */
     public function actionCreate()
     {
+        $existingModel = ContactsPage::findOneExistingModel();
+
+        if ($existingModel !== null) {
+            throw new NotFoundHttpException();
+        }
+
         $model = new ContactsPage();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                \Yii::$app->session->setFlash('success','Успешно добавлено!');
-                return $this->redirect(['index', 'id' => $model->id]);
+                \Yii::$app->session->setFlash('success', 'Успешно добавлено!');
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -91,7 +100,7 @@ class ContactsPageController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             \Yii::$app->session->setFlash('success','Успешно обновлено!');
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

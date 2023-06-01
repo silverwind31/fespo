@@ -12,6 +12,7 @@ use Yii;
  * @property string $content
  * @property string|null $published_date
  * @property string|null $image
+ * @property string|null $slug
  * @property int $status
  */
 class Articles extends \yii\db\ActiveRecord
@@ -34,7 +35,7 @@ class Articles extends \yii\db\ActiveRecord
             [['content'], 'string'],
             [['published_date'], 'safe'],
             [['status'], 'integer'],
-            [['title', 'image'], 'string', 'max' => 255],
+            [['title', 'image', 'slug'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,8 +49,9 @@ class Articles extends \yii\db\ActiveRecord
             'title' => 'Заголовок',
             'content' => 'Контент',
             'published_date' => 'Дата публикации',
+            'image' => 'Изображение',
+            'slug' => 'Slug',
             'status' => 'Статус',
-            'image' => 'Изображение'
         ];
     }
     public function getMainArticles()
@@ -60,9 +62,14 @@ class Articles extends \yii\db\ActiveRecord
             ->limit(3)
             ->all();
     }
-    public function getAllArticles()
+    public function getTotalArticlesCount()
     {
-        return Articles::find()->where(['status' => 1]);
+        return Articles::find()->where(['status' => 1])->count();
+    }
+
+    public function getPaginatedArticles($pagination)
+    {
+        return Articles::find()->where(['status' => 1])->offset($pagination->offset)->limit($pagination->limit)->all();
     }
     public function findById($id)
     {

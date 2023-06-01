@@ -10,6 +10,11 @@ class WorkSlider extends Widget
 {
     public function run()
     {
-        return $this->render('work-slider');
+        $sliderModels = new \common\models\WorkSlider();
+        $models = $sliderModels->getAllSlides();
+
+        return $this->render('work-slider', [
+            'models' => $models
+        ]);
     }
 }

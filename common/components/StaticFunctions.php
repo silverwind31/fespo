@@ -17,7 +17,7 @@ class StaticFunctions
             FileHelper::createDirectory($dir);
         }
         if($image->saveAs($dir.$fileName)){
-            return$fileName;
+            return $fileName;
         }
     }
     public static function getImage($imageName,$modelType,$modelId){
@@ -27,13 +27,13 @@ class StaticFunctions
         }
         return Yii::$app->params['frontend'] . "/img/no_photo.png";
     }
+
     public static function deleteImage($imageName,$modelType,$modelId){
         $file = Yii::getAlias("@frontend") . "/web/uploads/{$modelType}/{$modelId}/{$imageName}";
         if(is_file($file)){
             unlink($file);
         }
     }
-
     public static function getTableCounts($tableName)
     {
         $query = (new Query())
@@ -42,7 +42,6 @@ class StaticFunctions
 
         return $query;
     }
-
 
     public static function debug($arr)
     {
